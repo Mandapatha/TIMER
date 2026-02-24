@@ -1,12 +1,12 @@
 // Replace this with YOUR Firebase config from the Firebase Console
 const firebaseConfig = {
-    apiKey: "PASTE_YOUR_API_KEY_HERE",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyAlXt10sv3vf_y0yetjp1fJ0Oel08NgY8E",
+    authDomain: "mechovatetime.firebaseapp.com",
+    databaseURL: "https://mechovatetime-default-rtdb.firebaseio.com",
+    projectId: "mechovatetime",
+    storageBucket: "mechovatetime.firebasestorage.app",
+    messagingSenderId: "1096882294133",
+    appId: "1:1096882294133:web:2a00d1fe1f75717182973c"
 };
 
 // Initialize Firebase (Only if config is provided)
@@ -319,3 +319,4 @@ function animateText(finalText, element) {
 }
 
 updateDisplay(0, 0, 0);
+
