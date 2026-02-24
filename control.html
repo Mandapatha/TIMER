@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MECHOVATE 1.O - Command Console</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --primary-blue: #00f2ff;
+            --deep-blue: #010208;
+            --mid-blue: #050b1a;
+            --accent-gold: #ffcc00;
+            --accent-glow: rgba(0, 242, 255, 0.5);
+            --panel-bg: rgba(5, 10, 20, 0.85);
+            --glass-border: rgba(0, 242, 255, 0.2);
+            --text-color: #f0faff;
+            --font-main: 'Space Grotesk', sans-serif;
+            --font-heading: 'Syncopate', sans-serif;
+        }
+
+        body {
+            background-color: var(--deep-blue);
+            font-family: var(--font-main);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: auto;
+            position: relative;
+        }
+
+        /* Background Effects */
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at center, var(--mid-blue) 0%, var(--deep-blue) 100%);
+            z-index: -1;
+        }
+
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(rgba(0, 242, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 242, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        .command-center {
+            background: var(--panel-bg);
+            backdrop-filter: blur(40px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1.5rem;
+            padding: 3rem;
+            width: 90%;
+            max-width: 700px;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 242, 255, 0.05);
+            position: relative;
+            animation: consoleEntry 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        @keyframes consoleEntry {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .console-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        h2 {
+            font-family: var(--font-heading);
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.5rem;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .system-status {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--primary-blue);
+            opacity: 0.6;
+        }
+
+        .section-box {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--accent-gold);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::before {
+            content: "";
+            width: 15px;
+            height: 2px;
+            background: var(--accent-gold);
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-color);
+            opacity: 0.5;
+            text-align: center;
+        }
+
+        input {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 242, 255, 0.1);
+            border-radius: 0.5rem;
+            color: white;
+            padding: 1rem;
+            font-family: 'Michroma', sans-serif;
+            font-size: 1.2rem;
+            text-align: center;
+            transition: all 0.3s;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: var(--primary-blue);
+            background: rgba(0, 242, 255, 0.05);
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.1);
+        }
+
+        .btn-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .btn-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+        }
+
+        button {
+            padding: 1.2rem;
+            border-radius: 0.5rem;
+            font-family: var(--font-heading);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid transparent;
+        }
+
+        .btn-main {
+            background: var(--primary-blue);
+            color: var(--deep-blue);
+            font-weight: 700;
+        }
+
+        .btn-main:hover {
+            filter: brightness(1.2);
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .btn-alt {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-alt:hover {
+            background: rgba(0, 242, 255, 0.1);
+            border-color: var(--primary-blue);
+            color: var(--primary-blue);
+        }
+
+        .btn-warn {
+            background: rgba(255, 204, 0, 0.1);
+            color: var(--accent-gold);
+            border-color: rgba(255, 204, 0, 0.3);
+        }
+
+        .btn-warn:hover {
+            background: var(--accent-gold);
+            color: var(--deep-blue);
+            box-shadow: 0 0 20px rgba(255, 204, 0, 0.3);
+        }
+
+        /* Decorative Corners */
+        .corner {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border: 2px solid var(--primary-blue);
+            opacity: 0.5;
+        }
+
+        .tl {
+            top: 1rem;
+            left: 1rem;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .tr {
+            top: 1rem;
+            right: 1rem;
+            border-left: none;
+            border-bottom: none;
+        }
+
+        .bl {
+            bottom: 1rem;
+            left: 1rem;
+            border-right: none;
+            border-top: none;
+        }
+
+        .br {
+            bottom: 1rem;
+            right: 1rem;
+            border-left: none;
+            border-top: none;
+        }
+
+        input[type="text"]#break-label {
+            text-align: left;
+            padding-left: 1.5rem;
+            font-family: var(--font-main);
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-overlay"></div>
+    <div class="bg-grid"></div>
+
+    <div class="command-center">
+        <div class="corner tl"></div>
+        <div class="corner tr"></div>
+        <div class="corner bl"></div>
+        <div class="corner br"></div>
+
+        <div class="console-header">
+            <h2>Command Console</h2>
+            <div class="system-status">System: Online // Auth: Admin</div>
+        </div>
+
+        <!-- Master Timer Section -->
+        <div class="section-box">
+            <div class="section-title">Master Countdown</div>
+            <div class="input-grid">
+                <div class="input-group">
+                    <input type="number" id="master-h" placeholder="00" value="24">
+                    <label>Hours</label>
+                </div>
+                <div class="input-group">
+                    <input type="number" id="master-m" placeholder="00" min="0" max="59">
+                    <label>Minutes</label>
+                </div>
+                <div class="input-group">
+                    <input type="number" id="master-s" placeholder="00" min="0" max="59">
+                    <label>Seconds</label>
+                </div>
+            </div>
+            <div class="btn-stack">
+                <button id="set-timer" class="btn-main">Sync System Timer</button>
+                <div class="btn-row">
+                    <button id="pause-resume" class="btn-alt">Pause / Play</button>
+                    <button id="reset-timer" class="btn-alt">Global Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Break Protocol Section -->
+        <div class="section-box">
+            <div class="section-title">Break Protocol</div>
+            <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+                <div class="input-group" style="flex: 2;">
+                    <input type="text" id="break-label" placeholder="EVENT LABEL (e.g. TEA BREAK)">
+                    <label>Label Content</label>
+                </div>
+                <div class="input-group" style="flex: 1;">
+                    <input type="number" id="break-duration" placeholder="00" value="5">
+                    <label>Mins</label>
+                </div>
+            </div>
+            <div class="btn-stack">
+                <button id="start-break" class="btn-warn">Initiate Break Sequence</button>
+                <button id="end-break" class="btn-alt">End Sequence / Resume</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SDKs & Script Logic -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script>
+        // Keep the exact same logic as before to ensure it works
+        const firebaseConfig = {
+            apiKey: "PASTE_YOUR_API_KEY_HERE",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        let database, commandRef;
+        try {
+            if (firebaseConfig.apiKey !== "PASTE_YOUR_API_KEY_HERE") {
+                firebase.initializeApp(firebaseConfig);
+                database = firebase.database();
+                commandRef = database.ref('commands');
+            }
+        } catch (e) {
+            console.warn("Firebase failed.");
+        }
+
+        const bc = new BroadcastChannel('mechovate_controls');
+
+        const hInput = document.getElementById('master-h');
+        const mInput = document.getElementById('master-m');
+        const sInput = document.getElementById('master-s');
+        const setBtn = document.getElementById('set-timer');
+        const pauseBtn = document.getElementById('pause-resume');
+        const resetBtn = document.getElementById('reset-timer');
+        const breakLabel = document.getElementById('break-label');
+        const breakDuration = document.getElementById('break-duration');
+        const startBreakBtn = document.getElementById('start-break');
+        const endBreakBtn = document.getElementById('end-break');
+
+        function sendCommand(data) {
+            data.timestamp = Date.now();
+            bc.postMessage(data);
+            if (commandRef) commandRef.set(data);
+        }
+
+        setBtn.addEventListener('click', () => {
+            const h = parseInt(hInput.value) || 0;
+            const m = parseInt(mInput.value) || 0;
+            const s = parseInt(sInput.value) || 0;
+            const totalMs = ((h * 3600) + (m * 60) + s) * 1000;
+            if (totalMs > 0) {
+                sendCommand({
+                    type: 'SET_TARGET',
+                    value: Date.now() + totalMs,
+                    durationMs: totalMs
+                });
+            }
+        });
+
+        pauseBtn.addEventListener('click', () => sendCommand({ type: 'TOGGLE_PAUSE' }));
+
+        resetBtn.addEventListener('click', () => {
+            const h = parseInt(hInput.value) || 0;
+            const m = parseInt(mInput.value) || 0;
+            const s = parseInt(sInput.value) || 0;
+            const totalMs = ((h * 3600) + (m * 60) + s) * 1000;
+            sendCommand({
+                type: 'RESET',
+                value: Date.now() + totalMs,
+                durationMs: totalMs
+            });
+        });
+
+        startBreakBtn.addEventListener('click', () => {
+            sendCommand({
+                type: 'START_BREAK',
+                label: breakLabel.value.trim() || "TEA BREAK",
+                duration: parseInt(breakDuration.value) || 5
+            });
+        });
+
+        endBreakBtn.addEventListener('click', () => sendCommand({ type: 'END_BREAK' }));
+
+        // Spacebar shortcut
+        window.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' && e.target.tagName !== 'INPUT') {
+                e.preventDefault();
+                sendCommand({ type: 'TOGGLE_PAUSE' });
+            }
+        });
+    </script>
+</body>
+
+</html>

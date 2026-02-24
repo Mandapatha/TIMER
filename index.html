@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MECHOVATE 1.O - Countdown Timer</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta name="description" content="Official countdown timer for MECHOVATE 1.O. DESIGN, MODEL, MANUFACTURE.">
+</head>
+
+<body>
+    <div class="top-right-logo">
+        <img src="https://stjosephs.ac.in/assets/images/Engg%20Logo1.png"
+            alt="St. Joseph's College of Engineering Logo">
+    </div>
+    <div class="background-overlay">
+        <!-- SVG Mechanical Gears -->
+        <svg class="gear gear-1" viewBox="0 0 100 100">
+            <path
+                d="M50 30c-11 0-20 9-20 20s9 20 20 20 20-9 20-20-9-20-20-20zm0 32c-6.6 0-12-5.4-12-12s5.4-12 12-12 12 5.4 12 12-5.4 12-12 12zM50 10l-4 8h8l-4-8zm28.3 11.7l-7.1 2.9 4.1 6.9 7.1-2.9-4.1-6.9zM90 50l-8-4v8l8-4zm-11.7 28.3l-2.9-7.1-6.9 4.1 2.9 7.1 6.9-4.1zM50 90l4-8h-8l4 8zm-28.3-11.7l7.1-2.9-4.1-6.9-7.1 2.9 4.1 6.9zM10 50l8 4v-8l-8 4zm11.7-28.3l2.9 7.1 6.9-4.1-2.9-7.1-6.9 4.1z"
+                fill="currentColor" />
+        </svg>
+        <svg class="gear gear-2" viewBox="0 0 100 100">
+            <path
+                d="M50 30c-11 0-20 9-20 20s9 20 20 20 20-9 20-20-9-20-20-20zm0 32c-6.6 0-12-5.4-12-12s5.4-12 12-12 12 5.4 12 12-5.4 12-12 12zM50 10l-4 8h8l-4-8zm28.3 11.7l-7.1 2.9 4.1 6.9 7.1-2.9-4.1-6.9zM90 50l-8-4v8l8-4zm-11.7 28.3l-2.9-7.1-6.9 4.1 2.9 7.1 6.9-4.1zM50 90l4-8h-8l4 8zm-28.3-11.7l7.1-2.9-4.1-6.9-7.1 2.9 4.1 6.9zM10 50l8 4v-8l-8 4zm11.7-28.3l2.9 7.1 6.9-4.1-2.9-7.1-6.9 4.1z"
+                fill="currentColor" />
+        </svg>
+        <svg class="gear gear-3" viewBox="0 0 100 100">
+            <path
+                d="M50 30c-11 0-20 9-20 20s9 20 20 20 20-9 20-20-9-20-20-20zm0 32c-6.6 0-12-5.4-12-12s5.4-12 12-12 12 5.4 12 12-5.4 12-12 12zM50 10l-4 8h8l-4-8zm28.3 11.7l-7.1 2.9 4.1 6.9 7.1-2.9-4.1-6.9zM90 50l-8-4v8l8-4zm-11.7 28.3l-2.9-7.1-6.9 4.1 2.9 7.1 6.9-4.1zM50 90l4-8h-8l4 8zm-28.3-11.7l7.1-2.9-4.1-6.9-7.1 2.9 4.1 6.9zM10 50l8 4v-8l-8 4zm11.7-28.3l2.9 7.1 6.9-4.1-2.9-7.1-6.9 4.1z"
+                fill="currentColor" />
+        </svg>
+    </div>
+
+    <!-- HUD Overlays -->
+    <div class="hud-frame">
+
+        <div class="hud-scanline"></div>
+    </div>
+
+    <!-- Popup Message Overlay -->
+    <div id="popup-overlay" class="popup-overlay hidden">
+        <h2 id="popup-text">TEA BREAK</h2>
+        <div class="popup-timer" id="popup-timer">00:00</div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1 id="main-title">MECHOVATE 1.O</h1>
+            <p id="subtitle">DESIGN, MODEL, MANUFACTURE</p>
+        </header>
+
+        <main>
+            <div class="timer-display" id="timer">
+                <div class="time-block">
+                    <span id="hours">00</span>
+                    <label>Hours</label>
+                </div>
+                <div class="separator">:</div>
+                <div class="time-block">
+                    <span id="minutes">00</span>
+                    <label>Minutes</label>
+                </div>
+                <div class="separator">:</div>
+                <div class="time-block">
+                    <span id="seconds">00</span>
+                    <label>Seconds</label>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 MECHOVATE. All rights reserved.</p>
+        </footer>
+    </div>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
